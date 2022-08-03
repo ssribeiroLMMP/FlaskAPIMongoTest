@@ -1,6 +1,8 @@
 name: Docker Image CI
 
 on:
+  commit_comment:
+    branches: [ "dev" ]
   push:
     branches: [ "dev" ]
   pull_request:
