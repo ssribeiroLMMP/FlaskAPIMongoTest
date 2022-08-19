@@ -7,7 +7,7 @@ db.animal_tb.drop();
 
 // Recreate Animal "Table"
 //cria a coleção
-db.animal_tb.insert_many([
+db.animal_tb.insertMany([
   {
     id: 1,
     name: "Lion",
