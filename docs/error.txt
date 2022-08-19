@@ -1,0 +1,11 @@
+Retorno de erro na tentativa de conexão com o banco de dados do MongoGO: 
+flaskapimongotest-db-1   | 
+flaskapimongotest-db-1   | WARNING: MongoDB 5.0+ requires a CPU with AVX support, and your current system does not appear to have that!
+flaskapimongotest-db-1   |   see https://jira.mongodb.org/browse/SERVER-54407
+flaskapimongotest-db-1   |   see also https://www.mongodb.com/community/forums/t/mongodb-5-0-cpu-intel-g4650-compatibility/116610/2
+flaskapimongotest-db-1   |   see also https://github.com/docker-library/mongo/issues/485#issuecomment-891991814
+flaskapimongotest-db-1   | 
+flaskapimongotest-db-1   | /usr/local/bin/docker-entrypoint.sh: line 412:    27 Illegal instruction     (core dumped) "${mongodHackedArgs[@]}" --fork
+flaskapimongotest-db-1 exited with code 132
+
+Link do erro quando roda o banco de dados no meu computador: https://jira.mongodb.org/browse/SERVER-54407
