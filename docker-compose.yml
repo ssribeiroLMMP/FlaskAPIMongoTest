@@ -1,14 +1,31 @@
 version: '3'
+
+networks:
+  my_network:
+    driver: bridge
+
 services:
+  simulator:
+    build: ./app
+    command: ["python", "script.py"]
+    volumes:
+      - ./app:/app
+    networks:
+      - my_network
+
   api:
-    build: .
+    build: ./api
     command: python -u api.py
     ports:
       - "5000:5000"
     volumes:
-      - .:/api
+      - ./api:/api
     links:
       - db
+      - simulator
+    networks:
+    - my_network
+
   db:
     image: mongo:latest
     hostname: test_mongodb
@@ -20,3 +37,5 @@ services:
       - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
     ports:
       - 27017:27017
+    networks:
+      - my_network

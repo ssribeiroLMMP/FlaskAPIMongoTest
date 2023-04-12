@@ -2,6 +2,7 @@
 from distutils.log import debug
 from flask import Flask, jsonify
 from pymongo import MongoClient
+import os
 import paramiko
 
 # Initiate Flask api
@@ -37,10 +38,11 @@ def get_stored_animals():
         if type(db)==MongoClient:
             db.close()
 
-@app.route('/times')
+@api.route('/times')
 def get_times():
     # Open the file and read its contents
-    with open('output.txt', 'r') as f:
+    os.getcwd()
+    with open('api/output_copy.txt', 'r') as f:
         contents = f.read()
         
     # Use paramiko to SSH to another server and copy the file
@@ -48,7 +50,7 @@ def get_times():
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect('simulator', username='admin', password='admin')
     sftp = ssh.open_sftp()
-    sftp.put('output.txt', 'output_copy.txt')
+    sftp.put('app/output.txt', 'api/output_copy.txt')
     sftp.close()
     ssh.close()
 
