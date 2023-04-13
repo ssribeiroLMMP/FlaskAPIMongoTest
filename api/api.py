@@ -3,7 +3,7 @@ from distutils.log import debug
 from flask import Flask, jsonify
 from pymongo import MongoClient
 import os
-import paramiko
+import subprocess
 
 # Initiate Flask api
 api = Flask(__name__)
@@ -40,19 +40,13 @@ def get_stored_animals():
 
 @api.route('/times')
 def get_times():
+    # Copy output.txt from simulator into api
+    contents = subprocess.run(["sshpass","-p","admin","scp","-o","StrictHostKeyChecking=no","admin@simulator:/app/output.txt","/api/output_copy.txt"])
+
     # Open the file and read its contents
     os.getcwd()
-    with open('api/output_copy.txt', 'r') as f:
+    with open('/api/output_copy.txt', 'r') as f:
         contents = f.read()
-        
-    # Use paramiko to SSH to another server and copy the file
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect('simulator', username='admin', password='admin')
-    sftp = ssh.open_sftp()
-    sftp.put('app/output.txt', 'api/output_copy.txt')
-    sftp.close()
-    ssh.close()
 
     # Return the contents of the file as a JSON response
     return jsonify({'contents': contents})
