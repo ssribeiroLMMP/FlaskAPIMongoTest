@@ -1,9 +1,10 @@
 #!/bin/bash
 
+OUTFILE=output.txt
+
 service ssh start
-service ssh restart
-service ssh restart
 
 while [ true ]; do
-    python script.py
+    date +'%F %T' >> ${OUTFILE}
+    sleep 60
 done
