@@ -1,5 +1,5 @@
 # Use a Python 3.9 image as the base
-FROM python:3.9
+FROM ubuntu:latest
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive \
